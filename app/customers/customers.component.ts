@@ -1,23 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerComponent } from './customer.component';
+import { CustomerService } from './customer.service';
+import {Observable} from "rxjs/Rx";
 
 @Component({
     moduleId: module.id,
     selector: 'app-customers',
     templateUrl: 'customers.component.html',
-    directives: [CustomerComponent]
+    directives: [CustomerComponent],
+  providers: [CustomerService]
 })
 export class CustomersComponent implements OnInit {
-  customers = [
-    {id:1, name: 'Siva'},
-    {id:2, name: 'Picture'},
-    {id:3, name: 'Me'},
-    {id:4, name: 'Gooolge'},
-    {id:5, name: 'Nance'}
-  ]
 
-  constructor() { }
+  customers: Observable<any[]>;
 
-    ngOnInit() { }
+  constructor(private _customerService: CustomerService) {}
+
+  ngOnInit() {
+    this.customers = this._customerService.getCustomers()
+      .catch((err) => {
+        console.log(err);
+        return Observable.of(true);
+      });
+  }
 
 }
