@@ -20,11 +20,11 @@ export class CustomerService {
       });
   }
 
-    // getCustomers(){
-    //   return this._http.get(URL_CUSTOMER)
-    //     .map((response: Response) => response.json())
-    //     .catch(this._handleError);
-    // }
+    getCustomersRxobservable(){
+      return this._http.get(URL_CUSTOMER)
+        .map((response: Response) => response.json())
+        .catch(this._handleError);
+    }
 
     _handleError(err: any){
       console.log(err);

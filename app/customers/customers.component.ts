@@ -12,15 +12,23 @@ import {Observable} from "rxjs/Rx";
 })
 export class CustomersComponent implements OnInit {
 
-  customers: Promise<any[]>;
+  customers: any[];
 
   constructor(private _customerService: CustomerService) {}
 
   ngOnInit() {
-    this.customers = this._customerService.getCustomers()
-      .catch((err) => {
-        console.log(err); 
-      });
+    this._customerService.getCustomersRxobservable()
+      .subscribe(
+        (customers) => this.customers = customers,
+        (err) => {
+          console.log(err);
+        }
+      );
+
+    // this.customers = this._customerService.getCustomers()
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
     // Rx Observable version
     // this.customers = this._customerService.getCustomers()
     //   .catch((err) => {
